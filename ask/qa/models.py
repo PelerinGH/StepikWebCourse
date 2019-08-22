@@ -17,11 +17,20 @@ class Question(models.Model):
     author=models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     likes=models.ManyToManyField(User,related_name='question_like_user')
 
+    def __str__(self):
+        return self.title
+
+    def get_url(self):
+        return "/question/{}/".format(self.id)
+
 class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(null=True, auto_now_add=True)
     question=models.ForeignKey(Question,on_delete=models.CASCADE)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.text
 
 
 # Create your models here.
