@@ -75,7 +75,7 @@ WSGI_APPLICATION = 'ask.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'mysql.connector.django',
+        'ENGINE': 'django.db.backends.mysql',
         'NAME': 'askappdb',
         'USER':  'askapp',
         'PASSWORD': 'passwrd123',
@@ -120,3 +120,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+try:
+    from .local_settings import DATABASES
+except ImportError:
+    pass
+

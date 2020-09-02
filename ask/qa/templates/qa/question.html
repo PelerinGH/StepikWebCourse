@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1> {{ question.title }} </h1>
+
+<p> {{ question.text }} </p>
+
+<p>
+    {% for answer in question.answers %}
+        {{ answer }}
+    {% endfor %}
+</p>
+
+</body>
+</html>
