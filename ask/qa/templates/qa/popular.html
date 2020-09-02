@@ -1,39 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "qa/base.html" %}
 
-{{ questions }}
+{% block title %} Популярные вопросы {% endblock %}
 
-<nav>
-    <ul class="pagination">
-        {% for p in paginator.page_range %}
-            {% if p.number == page.number %}
-                <li class="active">
-                    {% else %}
-                <li>
-            {% endif %}
-        <a href="{{ paginator.baseurl }}{{ p.number }}">
-            {{ p.number }}
-        </a>
 
-        </li>
+{% block content %}
+    <nav>
+        <ul class="pagination">
+            {% for p in paginator.page_range %}
+                {% if p == page.number %}
+                    <li class="active">
+                {% else %}
+                    <li>
+                {% endif %}
+                <a href="{{ paginator.baseurl }}{{ p }}">
+                    {{ p }}
+                </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </nav>
+
+    <div>
+        {% for q in questions %}
+            <p>
+                <a href="{{ q.get_url }}">
+                    {{ q }}
+                </a>
+            </p>
         {% endfor %}
-    </ul>
-</nav>
-
-<div>
-    {% for q in questions %}
-        <p>
-            <a href="{{ q.get_url }}">
-                {{ q }}
-            </a>
-        </p>
-    {% endfor %}
-</div>
-
-</body>
-</html>
+    </div>
+{% endblock %}

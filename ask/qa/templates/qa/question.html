@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "qa/base.html" %}
 
-<h1> {{ question.title }} </h1>
+{% block title %} Вопрос {% endblock %}
 
-<p> {{ question.text }} </p>
-
-<p>
-    {% for answer in question.answers %}
-        {{ answer }}
-    {% endfor %}
-</p>
-
-</body>
-</html>
+{% block content %}
+    <h1> {{ question.title }} </h1>
+    <p> {{ question.text }} </p>
+    <ul>
+        {% for answer in question.answer_set.all %}
+            <li>
+                <p>{{ answer }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
