@@ -1,5 +1,5 @@
 from django.core.paginator import Paginator, EmptyPage
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseServerError
 from django.views.decorators.http import require_GET
@@ -86,7 +86,10 @@ def sign_up_view(request):
     return render(request, 'qa/signup.html', {'form': form})
 
 
-
+def logout_view(request):
+    if request.user is not None:
+        logout(request)
+        return HttpResponseRedirect(reverse('index'))
 
 def login_view(request):
     if request.method == 'POST':

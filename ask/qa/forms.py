@@ -44,6 +44,7 @@ class SignupForm(forms.Form):
 
     def save(self):
         user = User(**self.cleaned_data)
+        user.set_password(self.cleaned_data['password'])
         user.save()
         return user
 
