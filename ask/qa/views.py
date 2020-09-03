@@ -1,11 +1,11 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, Http404, HttpResponseRedirect
-from .models import Question
-
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, get_object_or_404, reverse
+from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseServerError
 from django.views.decorators.http import require_GET
 
-from .forms import AskForm, AnswerForm
+from .forms import AskForm, AnswerForm, SignupForm, LoginForm
+from .models import Question
 
 
 def test(request, *args, **kwargs):
@@ -59,12 +59,51 @@ def ask_view(request):
     if request.method == 'POST':
         form = AskForm(request.POST)
         if form.is_valid():
+            form._user = request.user
             question = form.save()
             url = question.get_url()
             return HttpResponseRedirect(url)
     else:
         form = AskForm()
     return render(request, 'qa/ask.html', {'form': form})
+
+
+def sign_up_view(request):
+    if request.method == 'POST':
+        form = SignupForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            form.save()
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                return HttpResponseServerError()
+    else:
+        form = SignupForm()
+    return render(request, 'qa/signup.html', {'form': form})
+
+
+
+
+def login_view(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return HttpResponseRedirect(reverse('index'))
+            else:
+                form.add_error(None, 'The username or password you entered is incorrect')
+    else:
+        form = LoginForm()
+    return render(request, 'qa/login.html', {'form': form})
+
 
 
 def paginate(request, queryset):

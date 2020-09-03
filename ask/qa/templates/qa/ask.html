@@ -4,7 +4,7 @@
 {% block title %} Задать вопрос {% endblock %}
 
 {% block content %}
-    <form action="" method="post" class="form-horizontal">
+    <form action="ask/" method="post" class="form">
         {% csrf_token %}
         {{ form|crispy }}
         <div class="form-actions">
