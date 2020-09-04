@@ -4,15 +4,20 @@
 {% block title %} Страница Регистрации {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-lg-6 col-md-12">
-            <form action="" method="post" class="form">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Отправить</button>
+    <div class="row justify-content-end">
+        <div class="col-lg-4 col-md-12">
+            <div class="card">
+                <div class="card-header">Зарегистрироваться</div>
+                <div class="card-body">
+                        <form action="" method="post" class="form">
+                            {% csrf_token %}
+                            {{ form|crispy }}
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary">Отправить</button>
+                            </div>
+                        </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 

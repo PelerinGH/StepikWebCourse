@@ -1,18 +1,29 @@
 {% extends "qa/base.html" %}
 {% load crispy_forms_tags %}
-
 {% block title %} Авторизоваться {% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-lg-6 col-md-12">
-            <form action="" method="post" class="form">
-                {% csrf_token %}
-                {{ form|crispy }}
-                <div class="form-actions">
-                    <button type="submit" class="btn btn-primary">Отправить</button>
+    <div class="row justify-content-end">
+        <div class="col-lg-4 col-md-12">
+            <div class="card">
+                <div class="card-header">Войти на сайт</div>
+                <div class="card-body">
+                    {% if next %}
+                        <div class="alert alert-info" role="alert">
+                            Вы обратились к странице, доступ к которой возможен только для залогиненных
+                            пользователей.<br>
+                            Пожалуйста, авторизуйтесь.
+                        </div>
+                    {% endif %}
+                    <form action="" method="post" class="form">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Отправить</button>
+                        </div>
+                    </form>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 

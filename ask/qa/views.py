@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, get_object_or_404, reverse
 from django.http import HttpResponse, Http404, HttpResponseRedirect, HttpResponseServerError
 from django.views.decorators.http import require_GET
+from django.contrib.auth.decorators import login_required
 
 from .forms import AskForm, AnswerForm, SignupForm, LoginForm
 from .models import Question
@@ -54,7 +55,7 @@ def question_view(request, q_id):
     }
     return render(request, "qa/question.html", context)
 
-
+@login_required
 def ask_view(request):
     if request.method == 'POST':
         form = AskForm(request.POST)

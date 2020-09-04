@@ -1,3 +1,4 @@
 .idea*
 venv/
 ask/ask/local_settings.py
+ask/db.sqlite3
